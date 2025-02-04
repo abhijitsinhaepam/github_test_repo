@@ -1,0 +1,36 @@
+name: Text File Checker
+
+# Trigger the workflow on push or pull request events
+on:
+  push:
+    paths:
+      - '**/*.txt'  # Trigger only when .txt files are pushed
+  pull_request:
+    paths:
+      - '**/*.txt'
+
+jobs:
+  check-text-files:
+    runs-on: ubuntu-latest  # Use the latest version of Ubuntu runner
+
+    steps:
+    # Step 1: Check out the code
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # Step 2: List all .txt files and check their content
+    - name: List .txt files
+      run: |
+        echo "Listing all .txt files in the repository:"
+        find . -type f -name "*.txt"
+        
+    # Step 3: Check for the word "Hello" inside all .txt files
+    - name: Check for the word "Hello"
+      run: |
+        echo "Checking if 'Hello' exists in .txt files"
+        if grep -q "Hello" *.txt; then
+          echo "Found 'Hello' in .txt files!"
+        else
+          echo "'Hello' not found in .txt files."
+          exit 1  # Fail the job if 'Hello' is not found
+        fi
