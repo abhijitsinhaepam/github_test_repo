@@ -1,0 +1,3 @@
+Hello, this is file 1.
+We are testing GitHub Actions here.
+The word "Hello" should be present in this file.
